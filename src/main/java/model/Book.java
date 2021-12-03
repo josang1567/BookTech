@@ -1,49 +1,101 @@
 package model;
 
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
-public class Book {
-	private Integer id;
-	private String nombre;
-	private Author autor;
-	private Set<Character> characterList;
-	
-	public Book(Integer id, String nombre, Author autor, Set<Character> characterList) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.autor = autor;
-		this.characterList = characterList;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Book")
+public class Book implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long id;
+	@Column(name = "name")
+	private String name;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "bookId")
+	private Author author;
+	@OneToMany(mappedBy = "Book", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Part> parts;
+	@OneToMany(mappedBy = "Book", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Annotation> annotations;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<Character> characters;
+
+	public Book(String name, Author author, Set<Part> parts, Set<Annotation> annotations, Set<Character> characters) {
+		this.id = -1L;
+		this.name = name;
+		this.author = author;
+		this.parts = parts;
+		this.annotations = annotations;
+		this.characters = characters;
 	}
+
 	public Book() {
-		super();
+		this("", new Author(), new HashSet<Part>(), new HashSet<Annotation>(), new HashSet<Character>());
 	}
-	public Integer getId() {
+
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getNombre() {
-		return nombre;
+
+	public String getName() {
+		return name;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public Author getAutor() {
-		return autor;
+
+	public Author getAuthor() {
+		return author;
 	}
-	public void setAutor(Author autor) {
-		this.autor = autor;
+	public void setAuthor(Author author) {
+		this.author = author;
 	}
-	public Set<Character> getCharacterList() {
-		return characterList;
+
+	public Set<Part> getParts() {
+		return parts;
 	}
-	public void setCharacterList(Set<Character> characterList) {
-		this.characterList = characterList;
+	public void setParts(Set<Part> parts) {
+		this.parts = parts;
 	}
+
+	public Set<Annotation> getAnnotations() {
+		return annotations;
+	}
+	public void setAnnotations(Set<Annotation> annotations) {
+		this.annotations = annotations;
+	}
+
+	public Set<Character> getCharacters() {
+		return characters;
+	}
+	public void setCharacters(Set<Character> characters) {
+		this.characters = characters;
+	}
+
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", nombre=" + nombre + ", autor=" + autor + ", characterList=" + characterList + "]";
+		return "Book [id=" + id + ", name=" + name + ", author=" + author + ", parts=" + parts + ", annotations=" + annotations + ", characters=" + characters + "]";
 	}
+
 }

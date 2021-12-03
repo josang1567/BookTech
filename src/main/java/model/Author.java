@@ -1,53 +1,75 @@
 package model;
 
-public class Author {
-	private Integer id;
-	private String name;
-	private String web_page;
-	private String email;
-	private String password;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
-	public Author(Integer id, String name, String web_page, String email, String password) {
-		super();
-		this.id = id;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Author")
+public class Author implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long id;
+	@Column(name = "name")
+	private String name;
+	@Column(name = "website")
+	private String website;
+	@Column(name = "email")
+	private String email;
+	@Column(name = "password")
+	private String password;
+	@OneToMany(mappedBy = "Author", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Book> books;
+
+	public Author(String name, String website, String email, String password, Set<Book> books) {
+		this.id = -1L;
 		this.name = name;
-		this.web_page = web_page;
+		this.website = website;
 		this.email = email;
 		this.password = password;
+		this.books = books;
 	}
 
 	public Author() {
-		super();
+		this("", "", "", "", new HashSet<Book>());
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public String getWeb_page() {
-		return web_page;
+	public String getWebsite() {
+		return website;
 	}
-
-	public void setWeb_page(String web_page) {
-		this.web_page = web_page;
+	public void setWebsite(String website) {
+		this.website = website;
 	}
 
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -55,14 +77,19 @@ public class Author {
 	public String getPassword() {
 		return password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
+	public Set<Book> getBooks() {
+		return books;
+	}
+	public void setBooks(Set<Book> books) {
+		this.books = books;
+	}
+
 	@Override
 	public String toString() {
-		return "Author [id=" + id + ", name=" + name + ", web_page=" + web_page + ", email=" + email + ", password="
-				+ password + "]";
+		return "Author [id=" + id + ", name=" + name + ", website=" + website + ", email=" + email + ", password=" + password + ", books=" + books + "]";
 	}
 }

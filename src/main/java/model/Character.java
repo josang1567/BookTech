@@ -1,41 +1,58 @@
 package model;
 
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
-public class Character {
-	private Integer id;
-	private String name;
-	private String rol;
-	private String features;
-	private Book book;
-	private Set<Character> characterList;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
-	public Character(Integer id, String name, String rol, String features, Book book, Set<Character> characterList) {
-		super();
-		this.id = id;
+@Entity
+@Table(name = "Character")
+public class Character implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long id;
+	@Column(name = "name")
+	private String name;
+	@Column(name = "rol")
+	private String rol;
+	@Column(name = "characteristics")
+	private String characteristics;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<Book> books;
+
+	public Character(String name, String rol, String characteristics, Set<Book> books) {
+		this.id = -1L;
 		this.name = name;
 		this.rol = rol;
-		this.features = features;
-		this.book = book;
-		this.characterList = characterList;
+		this.characteristics = characteristics;
+		this.books = books;
 	}
 
 	public Character() {
-		super();
+		this("", "", "", new HashSet<Book>());
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -43,38 +60,27 @@ public class Character {
 	public String getRol() {
 		return rol;
 	}
-
 	public void setRol(String rol) {
 		this.rol = rol;
 	}
 
-	public String getFeatures() {
-		return features;
+	public String getCharacteristics() {
+		return characteristics;
+	}
+	public void setCharacteristics(String characteristics) {
+		this.characteristics = characteristics;
 	}
 
-	public void setFeatures(String features) {
-		this.features = features;
+	public Set<Book> getBooks() {
+		return books;
 	}
-
-	public Book getBook() {
-		return book;
-	}
-
-	public void setBook(Book book) {
-		this.book = book;
-	}
-
-	public Set<Character> getCharacterList() {
-		return characterList;
-	}
-
-	public void setCharacterList(Set<Character> characterList) {
-		this.characterList = characterList;
+	public void setBooks(Set<Book> books) {
+		this.books = books;
 	}
 
 	@Override
 	public String toString() {
-		return "Character [id=" + id + ", name=" + name + ", rol=" + rol + ", features=" + features + ", book=" + book
-				+ ", characterList=" + characterList + "]";
+		return "Character [id=" + id + ", name=" + name + ", rol=" + rol + ", characteristics=" + characteristics + ", books=" + books + "]";
 	}
+
 }
