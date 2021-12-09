@@ -29,11 +29,11 @@ public class Book implements Serializable {
 	@Column(name = "name")
 	private String name;
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "bookId")
+	@JoinColumn(name = "authorId")
 	private Author author;
-	@OneToMany(mappedBy = "Book", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Part> parts;
-	@OneToMany(mappedBy = "Book", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Annotation> annotations;
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Character> characters;
@@ -49,6 +49,10 @@ public class Book implements Serializable {
 
 	public Book() {
 		this("", new Author(), new HashSet<Part>(), new HashSet<Annotation>(), new HashSet<Character>());
+	}
+	
+	public Book(String name, Author author) {
+		this(name, author, new HashSet<Part>(), new HashSet<Annotation>(), new HashSet<Character>());
 	}
 
 	public Long getId() {

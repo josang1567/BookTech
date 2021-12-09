@@ -9,7 +9,6 @@ import model.Author;
 import model.Book;
 
 import java.io.IOException;
-import java.util.HashSet;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -45,8 +44,11 @@ public class App extends Application {
 		em = emf.createEntityManager();
 		em.getTransaction().begin();
 
-		Author au = new Author("prueba", "prueba.org", "prueba@prueba.org", "passprueba", new HashSet<Book>());
+		Author au = new Author("AutorPrueba", "prueba.org", "prueba@prueba.org", "passprueba");
+		Book bu = new Book("libroPrueba", au);
+		bu.setAuthor(au);
 		em.persist(au);
+		em.persist(bu);
 
 		em.getTransaction().commit();
 //		launch();

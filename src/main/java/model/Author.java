@@ -30,7 +30,7 @@ public class Author implements Serializable {
 	private String email;
 	@Column(name = "password")
 	private String password;
-	@OneToMany(mappedBy = "Author", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Book> books;
 
 	public Author(String name, String website, String email, String password, Set<Book> books) {
@@ -44,6 +44,10 @@ public class Author implements Serializable {
 
 	public Author() {
 		this("", "", "", "", new HashSet<Book>());
+	}
+	
+	public Author(String name, String website, String email, String password) {
+		this(name, website, email, password, new HashSet<Book>());
 	}
 
 	public Long getId() {

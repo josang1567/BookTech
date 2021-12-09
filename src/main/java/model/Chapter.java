@@ -34,7 +34,7 @@ public class Chapter implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "partId")
 	private Part part;
-	@OneToMany(mappedBy = "Chapter", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Annotation> annotations;
 
 	public Chapter(String name, Integer number, String description, Part part, Set<Annotation> annotations) {
@@ -48,6 +48,10 @@ public class Chapter implements Serializable {
 
 	public Chapter() {
 		this("", Integer.MIN_VALUE, "", new Part(), new HashSet<Annotation>());
+	}
+	
+	public Chapter(String name, Integer number, String description, Part part) {
+		this(name, number, description, part, new HashSet<Annotation>());
 	}
 
 	public Long getId() {

@@ -32,7 +32,7 @@ public class Part implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "bookId")
 	private Book book;
-	@OneToMany(mappedBy = "Part", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "part", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Chapter> chapters;
 
 	public Part(String name, Integer number, Book book, Set<Chapter> chapters) {
@@ -45,6 +45,10 @@ public class Part implements Serializable {
 
 	public Part() {
 		this("", Integer.MIN_VALUE, new Book(), new HashSet<Chapter>());
+	}
+
+	public Part(String name, Integer number, Book book) {
+		this(name, number, book, new HashSet<Chapter>());
 	}
 
 	public Long getId() {
