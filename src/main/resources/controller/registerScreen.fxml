@@ -7,18 +7,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterController">
    <children>
       <ImageView fitHeight="735.0" fitWidth="1291.0" layoutX="-4.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/registerScreen.jpg" />
          </image>
       </ImageView>
-      <TextField layoutX="568.0" layoutY="344.0" />
-      <TextField layoutX="568.0" layoutY="410.0" />
-      <TextField layoutX="568.0" layoutY="489.0" />
-      <TextField layoutX="568.0" layoutY="565.0" />
-      <Button alignment="CENTER" layoutX="586.0" layoutY="598.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" style="-fx-background-color: #444951;" text="REGISTER" textFill="WHITE">
+      <TextField fx:id="user_Register" layoutX="568.0" layoutY="344.0" />
+      <TextField fx:id="pass_Register" layoutX="568.0" layoutY="410.0" />
+      <TextField fx:id="web_Register" layoutX="568.0" layoutY="489.0" />
+      <TextField fx:id="email_Register" layoutX="568.0" layoutY="565.0" />
+      <Button fx:id="btn_register" alignment="CENTER" layoutX="586.0" layoutY="598.0" mnemonicParsing="false" onAction="#signUp" prefHeight="25.0" prefWidth="112.0" style="-fx-background-color: #444951;" text="REGISTER" textFill="WHITE">
          <font>
             <Font name="Impact" size="20.0" />
          </font>

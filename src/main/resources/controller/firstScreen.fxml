@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FirstScreenController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/firstScreen.jpg" />
          </image>
       </ImageView>
-      <TreeView fx:id="tree_books" layoutY="65.0" prefHeight="607.0" prefWidth="477.0" />
-      <TextField alignment="CENTER" editable="false" layoutX="648.0" layoutY="395.0" prefHeight="74.0" prefWidth="517.0" style="-fx-background-color: 000000;" text="WELCOME + AUTOR">
+      <TextField fx:id="autor_FScreen" alignment="CENTER" editable="false" layoutX="576.0" layoutY="261.0" prefHeight="118.0" prefWidth="704.0" style="-fx-background-color: #0000;" text="PONER AUTOR">
          <font>
             <Font name="Impact" size="61.0" />
          </font>
       </TextField>
-      <Button fx:id="btn_add" layoutX="1206.0" layoutY="669.0" mnemonicParsing="false" opacity="0.0" prefHeight="51.0" prefWidth="52.0" text="Button" />
+      <Button fx:id="btn_editarModal" layoutX="981.0" layoutY="598.0" mnemonicParsing="false" onAction="#openModalCreateNote" opacity="0.0" prefHeight="51.0" prefWidth="52.0" text="Button" />
+      <ComboBox fx:id="cb_booksFS" layoutX="14.0" layoutY="285.0" onAction="#allBooksCB" prefHeight="71.0" prefWidth="525.0" />
+      <TextField fx:id="tf_nameBookFS" editable="false" layoutX="798.0" layoutY="474.0" prefHeight="25.0" prefWidth="286.0" promptText="Name" />
+      <ComboBox fx:id="cb_booksRemove" layoutX="836.0" layoutY="541.0" prefHeight="25.0" prefWidth="360.0" />
+      <Button fx:id="btn_add" layoutX="1105.0" layoutY="461.0" mnemonicParsing="false" onAction="#addBookTF" opacity="0.0" prefHeight="51.0" prefWidth="52.0" text="Button" />
+      <Button fx:id="btn_delete" layoutX="1201.0" layoutY="527.0" mnemonicParsing="false" onAction="#removeBookCB" opacity="0.0" prefHeight="51.0" prefWidth="52.0" text="Button" />
+      <TextField fx:id="oldbook_FS" editable="false" layoutX="798.0" layoutY="611.0" prefHeight="25.0" prefWidth="155.0" promptText="NAME OLD" />
+      <TextField fx:id="newbook_FS" editable="false" layoutX="1002.0" layoutY="611.0" prefHeight="25.0" prefWidth="155.0" promptText="NEW NAME" />
    </children>
 </AnchorPane>

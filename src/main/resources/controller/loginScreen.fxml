@@ -8,19 +8,24 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
       <ImageView fitHeight="728.0" fitWidth="1290.0" layoutX="-6.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/loginScreen.jpg" />
          </image>
       </ImageView>
-      <TextField layoutX="566.0" layoutY="465.0" prefHeight="25.0" prefWidth="149.0" />
-      <Button alignment="CENTER" layoutX="584.0" layoutY="514.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" style="-fx-background-color: #444951;" text="SIGN IN" textFill="WHITE">
+      <Button fx:id="signin_Login" alignment="CENTER" layoutX="534.0" layoutY="517.0" mnemonicParsing="false" onAction="#signIn" prefHeight="38.0" prefWidth="97.0" style="-fx-background-color: #444951;" text="SIGN IN" textFill="WHITE">
          <font>
             <Font name="Impact" size="20.0" />
          </font>
       </Button>
-      <PasswordField layoutX="566.0" layoutY="367.0" />
+      <TextField fx:id="user_Login" layoutX="546.0" layoutY="366.0" prefHeight="38.0" prefWidth="189.0" />
+      <PasswordField fx:id="pass_Login" layoutX="546.0" layoutY="465.0" prefHeight="38.0" prefWidth="189.0" />
+      <Button fx:id="btn_register" alignment="CENTER" layoutX="654.0" layoutY="517.0" mnemonicParsing="false" onAction="#signUp" prefHeight="38.0" prefWidth="97.0" style="-fx-background-color: #444951;" text="SIGN UP" textFill="WHITE">
+         <font>
+            <Font name="Impact" size="20.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

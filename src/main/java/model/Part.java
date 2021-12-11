@@ -13,11 +13,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Part")
+@NamedQueries({
+	@NamedQuery(name="findNameByPart",query="SELECT a from Part a where a.name=:name")
+})
 public class Part implements Serializable {
 	private static final long serialVersionUID = 1L;
 

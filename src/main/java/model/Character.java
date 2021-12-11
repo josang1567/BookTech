@@ -11,10 +11,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Characters")
+@NamedQueries({
+	@NamedQuery(name="findNameByBookCharacters",query="SELECT a from Character a where a.name=:name"),
+	})
 public class Character implements Serializable {
 	private static final long serialVersionUID = 1L;
 

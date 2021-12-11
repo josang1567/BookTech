@@ -10,13 +10,27 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Author")
+@NamedQueries({
+	@NamedQuery(name="findAuthorbyName",query="SELECT b from Author b where b.name=:name"),
+	@NamedQuery(name="findUserPassword",query="SELECT a from Author a where a.name=:name AND a.password= :password")
+})
 public class Author implements Serializable {
 	private static final long serialVersionUID = 1L;
+	private static Author singletoon;
+	
+	public static Author get_Instance() {
+		if(singletoon==null) {
+			singletoon=new Author();	
+		}	
+		return singletoon;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,6 +59,13 @@ public class Author implements Serializable {
 	public Author() {
 		this("", "", "", "", new HashSet<Book>());
 	}
+	
+	public Author(String usuario,String password) {
+		this.name=usuario;
+		this.password=password;
+	}
+	
+	
 	
 	public Author(String name, String website, String email, String password) {
 		this(name, website, email, password, new HashSet<Book>());
