@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CharacterScreenController">
+   <children>
+      <ImageView fitHeight="728.0" fitWidth="1287.0" layoutX="-3.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/CharacterModal.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="name" alignment="CENTER" editable="false" layoutX="653.0" layoutY="128.0" prefHeight="96.0" prefWidth="317.0" style="-fx-background-color: 000000;" text="Name">
+         <font>
+            <Font name="Impact" size="44.0" />
+         </font>
+      </TextField>
+      <TextArea fx:id="description" disable="true" layoutX="644.0" layoutY="230.0" prefHeight="398.0" prefWidth="334.0" promptText="FEATURES" />
+      <TextField fx:id="rol" alignment="CENTER" editable="false" layoutX="997.0" layoutY="324.0" prefHeight="126.0" prefWidth="252.0" style="-fx-background-color: 000000;" text="ROL">
+         <font>
+            <Font name="Impact" size="32.0" />
+         </font>
+      </TextField>
+      <ListView fx:id="charactersList" editable="true" layoutY="48.0" prefHeight="646.0" prefWidth="412.0" />
+   </children>
+</AnchorPane>
