@@ -1,10 +1,7 @@
 package model;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,15 +12,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Part")
+@Table(name = "Annotation")
 @NamedQueries({
-	@NamedQuery(name="findByName",query="SELECT a from Part a where a.name=:name")
-})
-public class Part implements Serializable {
+	@NamedQuery(name="findByName",query="SELECT a from Annotation a where a.name=:name"),
+	})
+public class Annotation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -32,24 +28,25 @@ public class Part implements Serializable {
 	private Long id;
 	@Column(name = "name")
 	private String name;
-	@Column(name = "number")
-	private Integer number;
+	@Column(name = "description")
+	private String description;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "chapterId")
+	private Chapter chapter;
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "bookId")
 	private Book book;
-	@OneToMany(mappedBy = "Part", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Chapter> chapters;
 
-	public Part(String name, Integer number, Book book, Set<Chapter> chapters) {
+	public Annotation(String name, String description, Chapter chapter, Book book) {
 		this.id = -1L;
 		this.name = name;
-		this.number = number;
+		this.description = description;
+		this.chapter = chapter;
 		this.book = book;
-		this.chapters = chapters;
 	}
 
-	public Part() {
-		this("", Integer.MIN_VALUE, new Book(), new HashSet<Chapter>());
+	public Annotation() {
+		this("", "", new Chapter(), new Book());
 	}
 
 	public Long getId() {
@@ -66,11 +63,18 @@ public class Part implements Serializable {
 		this.name = name;
 	}
 
-	public Integer getNumber() {
-		return number;
+	public String getDescription() {
+		return description;
 	}
-	public void setNumber(Integer number) {
-		this.number = number;
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Chapter getChapter() {
+		return chapter;
+	}
+	public void setChapter(Chapter chapter) {
+		this.chapter = chapter;
 	}
 
 	public Book getBook() {
@@ -80,15 +84,9 @@ public class Part implements Serializable {
 		this.book = book;
 	}
 
-	public Set<Chapter> getChapters() {
-		return chapters;
-	}
-	public void setChapters(Set<Chapter> chapters) {
-		this.chapters = chapters;
-	}
-
 	@Override
 	public String toString() {
-		return "Part [id=" + id + ", name=" + name + ", number=" + number + ", book=" + book + ", chapters=" + chapters + "]";
+		return "Annotation [id=" + id + ", name=" + name + ", description=" + description + ", chapter=" + chapter + ", book=" + book + "]";
 	}
+
 }
