@@ -74,12 +74,12 @@ public class ChapterDAO implements IDAO<Chapter> {
 		return autores;
 	}
 
-	public Chapter getByPart(Part part) {
-	
-		Chapter result = null;
+	public List<Chapter> getByPart(Part part) {
+		List<Chapter> result = null;
 		EntityManager em = createEM();
 		em.getTransaction().begin();
-		result = em.find(Chapter.class, part);
+		TypedQuery<Chapter> query = em.createNamedQuery("getChapterByPart", Chapter.class).setParameter("idPart", part.getId());
+		result = query.getResultList();
 		em.getTransaction().commit();
 		return result;
 	}

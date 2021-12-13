@@ -1,15 +1,12 @@
 package model.DAO;
 
-import model.Annotation;
 import model.Book;
 import model.Part;
 import model.interfaces.IDAO;
 
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.EntityManager;
@@ -65,19 +62,17 @@ public class PartDAO implements IDAO<Part> {
 	        em.getTransaction().commit();
 	        return partes;
 	    }
-	    
 
-	    public Part getByBook(Book book) {
-			Part result= null;
-			EntityManager em=createEM();
+		public List<Part> getByBook(Book book) {
+			List<Part> result = new ArrayList<>();
+			EntityManager em = createEM();
 			em.getTransaction().begin();
-			result=em.find(Part.class, book);
+			TypedQuery<Part> query = em.createNamedQuery("getPartByBook", Part.class).setParameter("idBook", book.getId());
+			result = query.getResultList();
 			em.getTransaction().commit();
 			return result;
 		}
 
-		
-		@Override
 		public Set<Part> getAll() {
 			  Set<Part> partes= new HashSet<Part>();
 		        EntityManager em=createEM();
@@ -88,6 +83,17 @@ public class PartDAO implements IDAO<Part> {
 		        CriteriaQuery<Part> all = cq.select(rootEntry);
 		        TypedQuery<Part> q= em.createQuery(all);
 		        return partes;
+		}
+	   
+		
+		public List<Part> getAllGuay() {
+			List<Part> partes = new ArrayList<Part>();
+			EntityManager em = createEM();
+			em.getTransaction().begin();
+			TypedQuery<Part> q = em.createNamedQuery("getAll", Part.class);
+			partes = q.getResultList();
+			em.getTransaction().commit();
+			return partes;
 		}
 
 		@Override

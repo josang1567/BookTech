@@ -8,26 +8,26 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1287.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/mainScreen.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="btn_share" layoutX="844.0" layoutY="4.0" mnemonicParsing="false" opacity="0.0" prefHeight="59.0" prefWidth="62.0" text="Button" />
+      <Button fx:id="btn_share" layoutX="844.0" layoutY="4.0" mnemonicParsing="false" onAction="#share" opacity="0.0" prefHeight="59.0" prefWidth="62.0" text="Button" />
       <Button fx:id="btn_cloud" layoutX="912.0" layoutY="4.0" mnemonicParsing="false" opacity="0.0" prefHeight="59.0" prefWidth="62.0" text="Button" />
       <Button fx:id="btn_exitmain" layoutX="1210.0" layoutY="661.0" mnemonicParsing="false" opacity="0.0" prefHeight="59.0" prefWidth="62.0" text="Button" />
       <Button fx:id="btn_addCharacter" layoutX="250.0" layoutY="661.0" mnemonicParsing="false" opacity="0.0" prefHeight="59.0" prefWidth="62.0" text="Button" />
-      <TextArea fx:id="ta_content" layoutX="455.0" layoutY="63.0" prefHeight="535.0" prefWidth="544.0" style="-fx-background-color: 000000;" />
+      <TextArea fx:id="ta_content" layoutX="455.0" layoutY="63.0" prefHeight="535.0" prefWidth="544.0" style="-fx-background-color: 000000;" wrapText="true" />
       <TextField fx:id="print_notes" editable="false" layoutX="1051.0" layoutY="145.0" prefHeight="277.0" prefWidth="219.0" style="-fx-background-color: 0000000;" />
-      <ComboBox fx:id="cb_part" layoutX="24.0" layoutY="252.0" prefHeight="25.0" prefWidth="351.0" />
-      <ComboBox fx:id="cb_chapter" layoutX="24.0" layoutY="437.0" prefHeight="25.0" prefWidth="351.0" />
-      <ComboBox fx:id="cb_notes" layoutX="1059.0" layoutY="108.0" prefHeight="25.0" prefWidth="198.0" />
+      <ComboBox fx:id="cb_part" layoutX="24.0" layoutY="252.0" onAction="#partSelection" prefHeight="25.0" prefWidth="351.0" />
+      <ComboBox fx:id="cb_chapter" disable="true" layoutX="24.0" layoutY="437.0" onAction="#loadChapter" prefHeight="25.0" prefWidth="351.0" />
+      <ComboBox fx:id="cb_notes" layoutX="1059.0" layoutY="108.0" onAction="#annotationLoader" prefHeight="25.0" prefWidth="198.0" />
       <Button fx:id="btn_save" layoutX="675.0" layoutY="620.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="SAVE" />
       <ComboBox fx:id="cb_removeNote" layoutX="1050.0" layoutY="497.0" prefHeight="40.0" prefWidth="211.0" />
       <Button fx:id="btn_addNote" layoutX="1156.0" layoutY="661.0" mnemonicParsing="false" opacity="0.0" prefHeight="59.0" prefWidth="49.0" text="Button" />
       <Button fx:id="btn_editNote" layoutX="1192.0" layoutY="567.0" mnemonicParsing="false" opacity="0.0" prefHeight="59.0" prefWidth="49.0" text="Button" />
-      <Button fx:id="btn_removeNote" layoutX="1227.0" layoutY="420.0" mnemonicParsing="false" opacity="0.0" prefHeight="59.0" prefWidth="49.0" text="Button" />
+      <Button fx:id="btn_removeNote" layoutX="1227.0" layoutY="420.0" mnemonicParsing="false" onAction="#removeAnnotation" opacity="0.0" prefHeight="59.0" prefWidth="49.0" text="Button" />
    </children>
 </AnchorPane>

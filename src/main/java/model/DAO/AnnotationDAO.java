@@ -1,8 +1,6 @@
 package model.DAO;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -16,6 +14,7 @@ import javax.persistence.criteria.Root;
 
 import util.PersistenceUnit;
 import model.Annotation;
+import model.Book;
 import model.Chapter;
 import model.interfaces.IDAO;
 
@@ -44,7 +43,8 @@ public class AnnotationDAO implements IDAO<Annotation>{
 	public void delete(Annotation annotation) {
 		EntityManager em=createEM();
 		em.getTransaction().begin();
-		em.remove(annotation);
+		Object managed=em.merge(annotation);
+		em.remove(managed);
 		em.getTransaction().commit();
 		
 	}
@@ -55,6 +55,16 @@ public class AnnotationDAO implements IDAO<Annotation>{
 		EntityManager em=createEM();
 		em.getTransaction().begin();
 		result=em.find(Annotation.class, id);
+		em.getTransaction().commit();
+		return result;
+	}
+
+	public List<Annotation> getByBook(Book book) {
+		List<Annotation> result = new ArrayList<>();
+		EntityManager em = createEM();
+		em.getTransaction().begin();
+		TypedQuery<Annotation> query = em.createNamedQuery("getAnnotationByBook", Annotation.class).setParameter("idBook", book.getId());
+		result = query.getResultList();
 		em.getTransaction().commit();
 		return result;
 	}
@@ -72,15 +82,17 @@ public class AnnotationDAO implements IDAO<Annotation>{
 		em.getTransaction().commit();		
 		return Annotations;
 	}
-	
-	public Annotation getByChapter(Chapter chapter) {
-		Annotation result= null;
-		EntityManager em=createEM();
+
+	public List<Annotation> getByChapter(Chapter chapter) {
+		List<Annotation> result = null;
+		EntityManager em = createEM();
 		em.getTransaction().begin();
-		result=em.find(Annotation.class, chapter);
+		TypedQuery<Annotation> query = em.createNamedQuery("getAnnotationByChapter", Annotation.class).setParameter("idChapter", chapter.getId());
+		result = query.getResultList();
 		em.getTransaction().commit();
 		return result;
 	}
+
 	@Override
 	public Set<Annotation> getAll() {
 		Set<Annotation> annotations= new HashSet<Annotation>();

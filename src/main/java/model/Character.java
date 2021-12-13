@@ -85,7 +85,7 @@ public class Character implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Character [id=" + id + ", name=" + name + ", rol=" + rol + ", characteristics=" + characteristics + ", books=" + books + "]";
+		return "Character [id=" + id + ", name=" + name + ", rol=" + rol + ", characteristics=" + characteristics + /*", books=" + books +*/ "]";
 	}
 
 }

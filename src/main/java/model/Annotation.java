@@ -18,6 +18,8 @@ import javax.persistence.Table;
 @Table(name = "Annotation")
 @NamedQueries({
 	@NamedQuery(name="findByName",query="SELECT a from Annotation a where a.name=:name"),
+	@NamedQuery(name="getAnnotationByBook", query = "SELECT a FROM Annotation a WHERE a.book.id=:idBook"),
+	@NamedQuery(name="getAnnotationByChapter", query = "SELECT a FROM Annotation a WHERE a.chapter.id=:idChapter")
 	})
 public class Annotation implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -86,7 +88,7 @@ public class Annotation implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Annotation [id=" + id + ", name=" + name + ", description=" + description + ", chapter=" + chapter + ", book=" + book + "]";
+		return "Annotation [id=" + id + ", name=" + name + ", description=" + description + /*", chapter=" + chapter + ", book=" + book +*/ "]";
 	}
 
 }

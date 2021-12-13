@@ -22,6 +22,7 @@ import javax.persistence.Table;
 @Table(name = "Chapter")
 @NamedQueries({
 	@NamedQuery(name="findNameByChapter",query="SELECT a from Chapter a where a.name=:name"),
+	@NamedQuery(name="getChapterByPart", query = "SELECT c FROM Chapter c WHERE c.part.id=:idPart")
 	})
 public class Chapter implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -103,6 +104,6 @@ public class Chapter implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Chapter [id=" + id + ", name=" + name + ", number=" + number + ", description=" + description + ", part=" + part + ", annotations=" + annotations + "]";
+		return "Chapter [id=" + id + ", name=" + name + ", number=" + number + ", description=" + description + /*", part=" + part + ", annotations=" + annotations +*/ "]";
 	}
 }
