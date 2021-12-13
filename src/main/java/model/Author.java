@@ -115,6 +115,6 @@ public class Author implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Author [id=" + id + ", name=" + name + ", website=" + website + ", email=" + email + ", password=" + password + ", books=" + books + "]";
+		return "Author [id=" + id + ", name=" + name + ", website=" + website + ", email=" + email + ", password=" + password + "]";
 	}
 }

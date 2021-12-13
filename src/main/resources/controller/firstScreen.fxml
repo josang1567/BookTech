@@ -20,13 +20,10 @@
             <Font name="Impact" size="61.0" />
          </font>
       </TextField>
-      <Button fx:id="btn_editarModal" layoutX="981.0" layoutY="598.0" mnemonicParsing="false" onAction="#openModalCreateNote" opacity="0.0" prefHeight="51.0" prefWidth="52.0" text="Button" />
       <ComboBox fx:id="cb_booksFS" layoutX="14.0" layoutY="285.0" onAction="#allBooksCB" prefHeight="71.0" prefWidth="525.0" />
-      <TextField fx:id="tf_nameBookFS" editable="false" layoutX="798.0" layoutY="474.0" prefHeight="25.0" prefWidth="286.0" promptText="Name" />
+      <TextField fx:id="tf_nameBookFS" layoutX="798.0" layoutY="474.0" prefHeight="25.0" prefWidth="286.0" promptText="Name" />
       <ComboBox fx:id="cb_booksRemove" layoutX="836.0" layoutY="541.0" prefHeight="25.0" prefWidth="360.0" />
-      <Button fx:id="btn_add" layoutX="1105.0" layoutY="461.0" mnemonicParsing="false" onAction="#addBookTF" opacity="0.0" prefHeight="51.0" prefWidth="52.0" text="Button" />
+      <Button fx:id="btn_add" layoutX="1201.0" layoutY="461.0" mnemonicParsing="false" onAction="#addBookTF" opacity="0.0" prefHeight="51.0" prefWidth="52.0" text="Button" />
       <Button fx:id="btn_delete" layoutX="1201.0" layoutY="527.0" mnemonicParsing="false" onAction="#removeBookCB" opacity="0.0" prefHeight="51.0" prefWidth="52.0" text="Button" />
-      <TextField fx:id="oldbook_FS" editable="false" layoutX="798.0" layoutY="611.0" prefHeight="25.0" prefWidth="155.0" promptText="NAME OLD" />
-      <TextField fx:id="newbook_FS" editable="false" layoutX="1002.0" layoutY="611.0" prefHeight="25.0" prefWidth="155.0" promptText="NEW NAME" />
    </children>
 </AnchorPane>

@@ -23,6 +23,7 @@ import javax.persistence.Table;
 @Table(name = "Book")
 @NamedQueries({
 	@NamedQuery(name="findNameByBook",query="SELECT a from Book a where a.name=:name"),
+	@NamedQuery(name="findByAuthor",query="SELECT p FROM Book p WHERE p.author.id =:author")
 	})
 public class Book implements Serializable {
 	private static final long serialVersionUID = 1L;

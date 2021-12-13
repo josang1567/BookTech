@@ -3,6 +3,10 @@ package controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Set;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -12,16 +16,15 @@ import model.Author;
 import model.Book;
 import model.DAO.AuthorDAO;
 import model.DAO.BookDAO;
+import util.AlertControl;
 
 public class FirstScreenController implements Initializable {
 	AuthorDAO aa;
-	BookDAO bb;
+	Author a1;
+	BookDAO bb=new BookDAO();
 	
     @FXML
     private TextField autor_FScreen;
-
-    @FXML
-    private Button btn_editarModal;
 
     @FXML
     private ComboBox<Book> cb_booksFS;
@@ -37,16 +40,14 @@ public class FirstScreenController implements Initializable {
 
     @FXML
     private Button btn_delete;
-    
-    @FXML
-    private TextField oldbook_FS;
 
-    @FXML
-    private TextField newbook_FS;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		autor_FScreen.setText("Welcome "+Author.get_Instance().getName());
+		allBooksCB();
+		cb_booksRemove.setItems(FXCollections.observableArrayList(bb.getByAuthor(Author.get_Instance())));
+
 	}
 	
 	
@@ -58,8 +59,8 @@ public class FirstScreenController implements Initializable {
      */
 	
     @FXML
-    private void allBooksCB() throws IOException {
-    	
+    private void allBooksCB() {
+    	cb_booksFS.setItems(FXCollections.observableArrayList(bb.getByAuthor(Author.get_Instance())));
     }
     
     /*
@@ -69,9 +70,15 @@ public class FirstScreenController implements Initializable {
      */
     @FXML
     private void addBookTF() throws IOException {
+    BookDAO bDAO=new BookDAO();
+    Book b1= new Book();
+    String nombre=tf_nameBookFS.getText();
+    b1.setName(nombre);
+    b1.setAuthor(Author.get_Instance());
+    bDAO.save(b1);
+    AlertControl.mensajeAdvertencia("Enhorabuena", "Su libro ha sido guardado con éxito");
+    tf_nameBookFS.clear();
     
-    	
-    	
     }
     
     
@@ -82,24 +89,14 @@ public class FirstScreenController implements Initializable {
      */
     @FXML
     private void removeBookCB() throws IOException {
-
+    	 	BookDAO bDAO=new BookDAO();
+    	    Long id=cb_booksRemove.getSelectionModel().getSelectedItem().getId();
+    	    bDAO.delete(id);
+    	    AlertControl.mensajeAdvertencia("Enhorabuena", "Su libro ha sido eliminado con éxito");
+    	    
     	
     	
     }
-    
-    /*
-     * @param book[]
-     * 
-     * @return todos los libros de un determinado autor
-     */
-    @FXML
-    private void openModalCreateNote() throws IOException {
-
-    	
-    	
-    }
-    
-    
    
     
 }

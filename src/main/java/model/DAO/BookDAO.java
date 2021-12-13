@@ -27,7 +27,6 @@ import model.interfaces.IDAO;
 import util.PersistenceUnit;
 
 public class BookDAO implements IDAO<Book> {
-
 	public static EntityManager createEM() {
 		EntityManagerFactory emf = PersistenceUnit.getInstance();
 		return emf.createEntityManager();
@@ -37,21 +36,21 @@ public class BookDAO implements IDAO<Book> {
 		EntityManager em = createEM();
 		return em.getTransaction();
 	}
+	EntityManager em = createEM();
 
 	@Override
 	public void save(Book b) {
-		EntityManager em = createEM();
 		em.getTransaction().begin();
 		em.persist(b);
 		em.getTransaction().commit();
 
 	}
 
-	@Override
-	public void delete(Book b) {
-		EntityManager em = createEM();
+	
+	public void delete(Long id) {
+		Book delete = getById(id);
 		em.getTransaction().begin();
-		em.remove(b);
+		em.remove(delete);
 		em.getTransaction().commit();
 
 	}
@@ -78,17 +77,17 @@ public class BookDAO implements IDAO<Book> {
 		return books;
 	}
 	
-	public Set<Book> getByAuthor(Author author) {
-		Set<Book> books = new HashSet<Book>();
+	public List<Book> getByAuthor(Author author) {
 		List<Book> lista= new ArrayList<Book>();
 		EntityManager em = createEM();
 		em.getTransaction().begin();
-		TypedQuery<Book> q = em.createNamedQuery("findByAuthor", Book.class);
-		q.setParameter("author", author);
-		lista= q.getResultList();
-		books = new  HashSet<>(lista);
+		TypedQuery<Book> q = em.createNamedQuery("findByAuthor", Book.class).setParameter("author", author.getId());
+		lista=q.getResultList();
+		System.out.println(lista);
 		em.getTransaction().commit();
-		return books;
+		
+		return lista;
+		
 	}
 
 	@Override
@@ -129,5 +128,11 @@ public class BookDAO implements IDAO<Book> {
 		p.getBooks().add(ax);
 		ax.getCharacters().add(p);
 		em.getTransaction().commit();
+	}
+
+	@Override
+	public void delete(Book t) {
+		// TODO Auto-generated method stub
+		
 	}
 }
