@@ -1,7 +1,9 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -19,6 +21,7 @@ import javax.persistence.Table;
 @Table(name = "Characters")
 @NamedQueries({
 	@NamedQuery(name="findNameByBookCharacters",query="SELECT a from Character a where a.name=:name"),
+	@NamedQuery(name="findBybooks",query="SELECT c from Character c JOIN c.books b on b.id=:book")
 	})
 public class Character implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -34,9 +37,9 @@ public class Character implements Serializable {
 	@Column(name = "characteristics")
 	private String characteristics;
 	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<Book> books;
+	private List<Book> books;
 
-	public Character(String name, String rol, String characteristics, Set<Book> books) {
+	public Character(String name, String rol, String characteristics, List<Book> books) {
 		this.id = -1L;
 		this.name = name;
 		this.rol = rol;
@@ -45,7 +48,7 @@ public class Character implements Serializable {
 	}
 
 	public Character() {
-		this("", "", "", new HashSet<Book>());
+		this("", "", "", new ArrayList<Book>());
 	}
 
 	public Long getId() {
@@ -76,10 +79,10 @@ public class Character implements Serializable {
 		this.characteristics = characteristics;
 	}
 
-	public Set<Book> getBooks() {
+	public List<Book> getBooks() {
 		return books;
 	}
-	public void setBooks(Set<Book> books) {
+	public void setBooks(List<Book> books) {
 		this.books = books;
 	}
 

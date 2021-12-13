@@ -1,6 +1,8 @@
 package controller;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -15,13 +17,17 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import model.Annotation;
+import model.Author;
 import model.Book;
 import model.Chapter;
+import model.Character;
 import model.Part;
 import model.DAO.AnnotationDAO;
 import model.DAO.BookDAO;
 import model.DAO.ChapterDAO;
+import model.DAO.CharacterDAO;
 import model.DAO.PartDAO;
+import util.AlertControl;
 
 public class MainScreenController implements Initializable {
 	ObservableList<Part> partList = FXCollections.observableArrayList();
@@ -30,7 +36,10 @@ public class MainScreenController implements Initializable {
 
 	@FXML
 	private Button btn_share;
-
+	
+	@FXML
+    private Button SHOW;
+	
 	@FXML
 	private Button btn_cloud;
 
@@ -70,15 +79,16 @@ public class MainScreenController implements Initializable {
 	@FXML
 	private Button btn_removeNote;
 
-	Book dummy=new BookDAO().getById(1L);										//DUMMY HASTA USAR USUARIO LOGUEADO
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		Book.get_Instance();
 		this.cb_part.setItems(this.partList);
 		this.cb_chapter.setItems(this.chapterList);
 		this.cb_notes.setItems(annotationList);
 		this.cb_removeNote.setItems(annotationList);
-		partList.addAll(new PartDAO().getByBook(dummy));						//USAR LIBRO LOGUEADO
-		this.annotationList.addAll(new AnnotationDAO().getByBook(dummy));	//USAR LIBRO LOGUEADO
+		partList.addAll(new PartDAO().getByBook(Book.get_Instance()));
+		this.annotationList.addAll(new AnnotationDAO().getByBook(Book.get_Instance()));	
 	}
 
 	@FXML
@@ -89,9 +99,13 @@ public class MainScreenController implements Initializable {
 				this.annotationList.clear();
 				this.ta_content.clear();
 				this.ta_content.setDisable(true);
-				this.annotationList.addAll(new AnnotationDAO().getByBook(dummy)); // USAR LIBRO LOGUEADO
+				this.annotationList.addAll(new AnnotationDAO().getByBook(Book.get_Instance())); // USAR LIBRO LOGUEADO
 			}
 			this.chapterList.clear();
+			Long id=this.cb_part.getSelectionModel().getSelectedItem().getId();
+			String name=this.cb_part.getSelectionModel().getSelectedItem().getName();
+			Part.get_Instance().setId(id);
+			Part.get_Instance().setName(name);
 			this.chapterList.addAll(new ChapterDAO().getByPart(this.cb_part.getSelectionModel().getSelectedItem()));
 			this.cb_chapter.setDisable(false);
 		} else {
@@ -148,12 +162,29 @@ public class MainScreenController implements Initializable {
 		}
 	}
 	
-	public void editAnnotation() {
-		//TODO
+	public void editAnnotation() throws IOException {
+		App.setRoot("noteModal");
 	}
 
 	@FXML
 	private void share() {
+		AlertControl.mensajeAdvertencia("Lo sentimos", "Esta opcion esta en proceso, la veras pronto en acción");
 	}
+	
+	@FXML
+	private void exit() throws IOException {
+		App.setRoot("firstScreen");
+	}
+	
+	@FXML
+	private void openAddCharacter() throws IOException{
+		App.setRoot("addCharacterScreen");
+	}
+	
+	@FXML
+	private void openCharacters() throws IOException{
+		App.setRoot("characterScreen");
+	}
+
 
 }

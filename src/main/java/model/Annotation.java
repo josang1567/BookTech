@@ -46,6 +46,13 @@ public class Annotation implements Serializable {
 		this.chapter = chapter;
 		this.book = book;
 	}
+	
+	public Annotation(String name, String description, Chapter chapter) {
+		this.id = -1L;
+		this.name = name;
+		this.description = description;
+		this.chapter = chapter;
+	}
 
 	public Annotation() {
 		this("", "", new Chapter(), new Book());

@@ -23,9 +23,12 @@ import javax.persistence.Table;
 @Table(name = "Book")
 @NamedQueries({
 	@NamedQuery(name="findNameByBook",query="SELECT a from Book a where a.name=:name"),
+	@NamedQuery(name="findByAuthor",query="SELECT p FROM Book p WHERE p.author.id =:author")
 	})
 public class Book implements Serializable {
 	private static final long serialVersionUID = 1L;
+	private static Book singletoon;
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,6 +54,14 @@ public class Book implements Serializable {
 		this.annotations = annotations;
 		this.characters = characters;
 	}
+	
+	public static Book get_Instance() {
+		if(singletoon==null) {
+			singletoon=new Book();	
+		}	
+		return singletoon;
+	}
+
 
 	public Book() {
 		this("", new Author(), new HashSet<Part>(), new HashSet<Annotation>(), new HashSet<Character>());

@@ -27,6 +27,7 @@ import javax.persistence.Table;
 })
 public class Part implements Serializable {
 	private static final long serialVersionUID = 1L;
+	private static Part singletoon;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +49,13 @@ public class Part implements Serializable {
 		this.number = number;
 		this.book = book;
 		this.chapters = chapters;
+	}
+	
+	public static Part get_Instance() {
+		if(singletoon==null) {
+			singletoon=new Part();	
+		}	
+		return singletoon;
 	}
 
 	public Part() {

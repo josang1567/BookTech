@@ -113,4 +113,13 @@ public class CharacterDAO implements IDAO<Character> {
 		ax.getBooks().add(b);
 		em.getTransaction().commit();
 	}
+	public List<Character> getByBooks(Book book) {
+		List<Character> lista = new ArrayList<Character>();
+		EntityManager em = PersistenceUnit.getEM();
+		em.getTransaction().begin();
+		TypedQuery<Character> q = em.createNamedQuery("findBybooks", Character.class).setParameter("book", book.getId());
+		lista = q.getResultList();
+		em.getTransaction().commit();
+		return lista;
+	}
 }

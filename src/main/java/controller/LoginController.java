@@ -37,22 +37,21 @@ public class LoginController {
     	AuthorDAO aDAO= new AuthorDAO();
     	String nombre= user_Login.getText();
     	String password= pass_Login.getText();
-    	try {
-    		if(aDAO.getByNamePassword(nombre, password)!=null) {
+    
+    		if(aDAO.getByNamePassword(nombre, password)!=null &&  nombre!=null && password!=null) {
     			Author.get_Instance().setName(nombre);
     			Author.get_Instance().setPassword(password);
+    			Author.get_Instance().setEmail(aDAO.getByNamePassword(nombre, password).getEmail());
+    			Author.get_Instance().setWebsite(aDAO.getByNamePassword(nombre, password).getWebsite());
+    			Author.get_Instance().setId(aDAO.getByNamePassword(nombre, password).getId());
     			App.setRoot("firstScreen");	
 		    }
-    	}catch(Exception e) {
-    		AlertControl.mensajeError("Error","No se encuentra al usuario, compruebe sus datos");
-        	
-    	}
+    	
     }
     
     @FXML
     private void signUp() throws IOException {
     	App.setRoot("registerScreen");
     }
-    
     
 }

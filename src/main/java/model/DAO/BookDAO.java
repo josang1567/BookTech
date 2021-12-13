@@ -22,16 +22,6 @@ import model.interfaces.IDAO;
 
 public class BookDAO implements IDAO<Book> {
 
-//	public static EntityManager createEM() {
-//		EntityManagerFactory emf = PersistenceUnit.getInstance();
-//		return emf.createEntityManager();
-//	}
-//
-//	public static EntityTransaction beginSession() {
-//		EntityManager em = createEM();
-//		return em.getTransaction();
-//	}
-
 	@Override
 	public void save(Book b) {
 		EntityManager em = PersistenceUnit.getEM();
@@ -72,17 +62,14 @@ public class BookDAO implements IDAO<Book> {
 		return books;
 	}
 	
-	public Set<Book> getByAuthor(Author author) {
-		Set<Book> books = new HashSet<Book>();
+	public List<Book> getByAuthor(Author author) {
 		List<Book> lista= new ArrayList<Book>();
 		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
-		TypedQuery<Book> q = em.createNamedQuery("findByAuthor", Book.class);
-		q.setParameter("author", author);
+		TypedQuery<Book> q = em.createNamedQuery("findByAuthor", Book.class).setParameter("author",author.getId());
 		lista= q.getResultList();
-		books = new  HashSet<>(lista);
 		em.getTransaction().commit();
-		return books;
+		return lista;
 	}
 
 	@Override

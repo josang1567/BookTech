@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddCharacterController">
    <children>
       <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -19,12 +18,13 @@
       </ImageView>
       <TextField fx:id="NAME_addCharacter" alignment="CENTER" layoutX="716.0" layoutY="79.0" prefHeight="51.0" prefWidth="451.0" promptText="NAME" />
       <ComboBox fx:id="CBbook_addCharacter" layoutX="716.0" layoutY="441.0" prefHeight="51.0" prefWidth="451.0" promptText="BOOK" />
-      <Button fx:id="btn_addCharacter" alignment="CENTER" layoutX="771.0" layoutY="528.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="341.0" style="-fx-background-color: #444951;" text="ADD" textFill="WHITE">
+      <Button fx:id="btn_addCharacter" alignment="CENTER" layoutX="771.0" layoutY="528.0" mnemonicParsing="false" onAction="#Save" prefHeight="60.0" prefWidth="341.0" style="-fx-background-color: #444951;" text="ADD" textFill="WHITE">
          <font>
             <Font name="Impact" size="20.0" />
          </font>
       </Button>
       <TextArea fx:id="description_addCharacter" layoutX="716.0" layoutY="198.0" prefHeight="228.0" prefWidth="451.0" promptText="DESCRIPTION" />
       <TextField fx:id="rol_addCharacter" alignment="CENTER" layoutX="716.0" layoutY="138.0" prefHeight="51.0" prefWidth="451.0" promptText="ROL" />
+      <Button fx:id="EXIT" layoutX="25.0" layoutY="23.0" mnemonicParsing="false" onAction="#exit" prefHeight="33.0" prefWidth="64.0" text="🢀" />
    </children>
 </AnchorPane>

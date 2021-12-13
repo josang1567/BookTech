@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -8,24 +9,25 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CharacterScreen">
    <children>
       <ImageView fitHeight="728.0" fitWidth="1287.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/CharacterModal.jpg" />
          </image>
       </ImageView>
-      <TextField fx:id="name_character" alignment="CENTER" layoutX="653.0" layoutY="128.0" prefHeight="96.0" prefWidth="317.0" style="-fx-background-color: 000000;" text="Name">
+      <TextField fx:id="name_character" alignment="CENTER" editable="false" layoutX="506.0" layoutY="266.0" prefHeight="96.0" prefWidth="651.0" style="-fx-background-color: #ffffff;" text="Name">
          <font>
             <Font name="Impact" size="44.0" />
          </font>
       </TextField>
-      <TextArea fx:id="features_character" layoutX="644.0" layoutY="230.0" prefHeight="398.0" prefWidth="334.0" promptText="FEATURES" />
-      <TextField fx:id="rol_character" alignment="CENTER" layoutX="997.0" layoutY="324.0" prefHeight="126.0" prefWidth="252.0" style="-fx-background-color: 000000;" text="ROL">
+      <TextArea fx:id="features_character" layoutX="564.0" layoutY="379.0" prefHeight="157.0" prefWidth="426.0" promptText="FEATURES" />
+      <TextField fx:id="rol_character" alignment="CENTER" editable="false" layoutX="506.0" layoutY="542.0" prefHeight="126.0" prefWidth="604.0" style="-fx-background-color: #ffffff;" text="ROL">
          <font>
-            <Font name="Impact" size="32.0" />
+            <Font name="Impact" size="22.0" />
          </font>
       </TextField>
-      <ComboBox fx:id="cb_characters" layoutX="14.0" layoutY="314.0" prefHeight="46.0" prefWidth="392.0" />
+      <ListView fx:id="charactersList" layoutX="51.0" layoutY="150.0" prefHeight="480.0" prefWidth="334.0" />
+      <Button fx:id="EXIT" layoutX="30.0" layoutY="62.0" mnemonicParsing="false" onAction="#exit" prefHeight="33.0" prefWidth="64.0" text="🢀" />
    </children>
 </AnchorPane>
