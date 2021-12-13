@@ -1,12 +1,11 @@
 package model.DAO;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -20,19 +19,19 @@ import model.interfaces.IDAO;
 
 public class AnnotationDAO implements IDAO<Annotation>{
 
-	public static EntityManager createEM() {
-		EntityManagerFactory emf= PersistenceUnit.getInstance();
-		return emf.createEntityManager();
-	}
-	
-	public static EntityTransaction beginSession() {
-		EntityManager em = createEM();
-		return em.getTransaction();	
-	}
+//	public static EntityManager createEM() {
+//		EntityManagerFactory emf= PersistenceUnit.getInstance();
+//		return emf.createEntityManager();
+//	}
+//	
+//	public static EntityTransaction beginSession() {
+//		EntityManager em = createEM();
+//		return em.getTransaction();	
+//	}
 	
 	@Override
 	public void save(Annotation annotation) {
-		EntityManager em=createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		em.persist(annotation);
 		em.getTransaction().commit();
@@ -41,10 +40,9 @@ public class AnnotationDAO implements IDAO<Annotation>{
 
 	@Override
 	public void delete(Annotation annotation) {
-		EntityManager em=createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
-		Object managed=em.merge(annotation);
-		em.remove(managed);
+		em.remove(annotation);
 		em.getTransaction().commit();
 		
 	}
@@ -52,7 +50,7 @@ public class AnnotationDAO implements IDAO<Annotation>{
 	@Override
 	public Annotation getById(Long id) {
 		Annotation result= null;
-		EntityManager em=createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		result=em.find(Annotation.class, id);
 		em.getTransaction().commit();
@@ -61,7 +59,7 @@ public class AnnotationDAO implements IDAO<Annotation>{
 
 	public List<Annotation> getByBook(Book book) {
 		List<Annotation> result = new ArrayList<>();
-		EntityManager em = createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		TypedQuery<Annotation> query = em.createNamedQuery("getAnnotationByBook", Annotation.class).setParameter("idBook", book.getId());
 		result = query.getResultList();
@@ -73,7 +71,7 @@ public class AnnotationDAO implements IDAO<Annotation>{
 	public Set<Annotation> getByName(String name) {
 		Set<Annotation> Annotations= new HashSet<Annotation>();
 		List<Annotation> lista= new ArrayList<Annotation>();
-		EntityManager em=createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		TypedQuery<Annotation> q= em.createNamedQuery("findByName", Annotation.class );
 		q.setParameter("name", name);
@@ -85,7 +83,7 @@ public class AnnotationDAO implements IDAO<Annotation>{
 
 	public List<Annotation> getByChapter(Chapter chapter) {
 		List<Annotation> result = null;
-		EntityManager em = createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		TypedQuery<Annotation> query = em.createNamedQuery("getAnnotationByChapter", Annotation.class).setParameter("idChapter", chapter.getId());
 		result = query.getResultList();
@@ -96,7 +94,7 @@ public class AnnotationDAO implements IDAO<Annotation>{
 	@Override
 	public Set<Annotation> getAll() {
 		Set<Annotation> annotations= new HashSet<Annotation>();
-		EntityManager em=createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 	    CriteriaQuery<Annotation> cq = cb.createQuery(Annotation.class);

@@ -3,15 +3,10 @@ package model.DAO;
 import java.util.Set;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -24,23 +19,22 @@ import model.Book;
 import model.Character;
 import model.Part;
 import model.interfaces.IDAO;
-import util.PersistenceUnit;
 
 public class BookDAO implements IDAO<Book> {
 
-	public static EntityManager createEM() {
-		EntityManagerFactory emf = PersistenceUnit.getInstance();
-		return emf.createEntityManager();
-	}
-
-	public static EntityTransaction beginSession() {
-		EntityManager em = createEM();
-		return em.getTransaction();
-	}
+//	public static EntityManager createEM() {
+//		EntityManagerFactory emf = PersistenceUnit.getInstance();
+//		return emf.createEntityManager();
+//	}
+//
+//	public static EntityTransaction beginSession() {
+//		EntityManager em = createEM();
+//		return em.getTransaction();
+//	}
 
 	@Override
 	public void save(Book b) {
-		EntityManager em = createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		em.persist(b);
 		em.getTransaction().commit();
@@ -49,7 +43,7 @@ public class BookDAO implements IDAO<Book> {
 
 	@Override
 	public void delete(Book b) {
-		EntityManager em = createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		em.remove(b);
 		em.getTransaction().commit();
@@ -59,7 +53,7 @@ public class BookDAO implements IDAO<Book> {
 	@Override
 	public Book getById(Long id) {
 		Book result = null;
-		EntityManager em = createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		result = em.find(Book.class, id);
 		em.getTransaction().commit();
@@ -69,7 +63,7 @@ public class BookDAO implements IDAO<Book> {
 	@Override
 	public Set<Book> getByName(String name) {
 		Set<Book> books = new HashSet<Book>();
-		EntityManager em = createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		TypedQuery<Book> q = em.createNamedQuery("findAuthorbyName", Book.class);
 		q.setParameter("name", name);
@@ -81,7 +75,7 @@ public class BookDAO implements IDAO<Book> {
 	public Set<Book> getByAuthor(Author author) {
 		Set<Book> books = new HashSet<Book>();
 		List<Book> lista= new ArrayList<Book>();
-		EntityManager em = createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		TypedQuery<Book> q = em.createNamedQuery("findByAuthor", Book.class);
 		q.setParameter("author", author);
@@ -94,7 +88,7 @@ public class BookDAO implements IDAO<Book> {
 	@Override
 	public Set<Book> getAll() {
 		Set<Book> Books = new HashSet<Book>();
-		EntityManager em = createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Book> cq = cb.createQuery(Book.class);
@@ -105,7 +99,7 @@ public class BookDAO implements IDAO<Book> {
 	}
 
 	public static void addPart(Book l, Part p) {
-		EntityManager em = createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		Book ax = em.merge(l);
 		p.setBook(ax);
@@ -114,7 +108,7 @@ public class BookDAO implements IDAO<Book> {
 	}
 
 	public static void addAnnotation(Book l, Annotation p) {
-		EntityManager em = createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		Book ax = em.merge(l);
 		p.setBook(ax);
@@ -123,7 +117,7 @@ public class BookDAO implements IDAO<Book> {
 	}
 
 	public static void addCharacter(Book l, Character p) {
-		EntityManager em = createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		Book ax = em.merge(l);
 		p.getBooks().add(ax);

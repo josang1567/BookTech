@@ -10,8 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -20,19 +18,19 @@ import javax.persistence.criteria.Root;
 import util.PersistenceUnit;
 
 public class PartDAO implements IDAO<Part> {
-	  public static EntityManager createEM() {
-	        EntityManagerFactory emf = PersistenceUnit.getInstance();
-	        return emf.createEntityManager();
-	    }
-
-	    public static EntityTransaction beginSession() {
-	        EntityManager em = createEM();
-	        return em.getTransaction();
-	    }
+//	  public static EntityManager createEM() {
+//	        EntityManagerFactory emf = PersistenceUnit.getInstance();
+//	        return emf.createEntityManager();
+//	    }
+//
+//	    public static EntityTransaction beginSession() {
+//	        EntityManager em = createEM();
+//	        return em.getTransaction();
+//	    }
 
 	    @Override
 	    public void save(Part a) {
-	        EntityManager em=createEM();
+	   	 EntityManager em = PersistenceUnit.getEM();
 	        em.getTransaction().begin();
 	        em.persist(a);
 	        em.getTransaction().commit();
@@ -41,7 +39,7 @@ public class PartDAO implements IDAO<Part> {
 
 	    @Override
 	    public void delete(Part a) {
-	        EntityManager em=createEM();
+	   	 EntityManager em = PersistenceUnit.getEM();
 	        em.getTransaction().begin();
 	        em.remove(a);
 	        em.getTransaction().commit();
@@ -53,7 +51,7 @@ public class PartDAO implements IDAO<Part> {
 	    public Set<Part> getByName(String name) {
 	        Set<Part> partes= new HashSet<Part>();
 	        List<Part> lista= new ArrayList<Part>();
-	        EntityManager em=createEM();
+	        EntityManager em = PersistenceUnit.getEM();
 	        em.getTransaction().begin();
 	        TypedQuery<Part> q= em.createNamedQuery("findByName", Part.class );
 	        q.setParameter("name", name);
@@ -65,7 +63,7 @@ public class PartDAO implements IDAO<Part> {
 
 		public List<Part> getByBook(Book book) {
 			List<Part> result = new ArrayList<>();
-			EntityManager em = createEM();
+			EntityManager em = PersistenceUnit.getEM();
 			em.getTransaction().begin();
 			TypedQuery<Part> query = em.createNamedQuery("getPartByBook", Part.class).setParameter("idBook", book.getId());
 			result = query.getResultList();
@@ -75,7 +73,7 @@ public class PartDAO implements IDAO<Part> {
 
 		public Set<Part> getAll() {
 			  Set<Part> partes= new HashSet<Part>();
-		        EntityManager em=createEM();
+			  EntityManager em = PersistenceUnit.getEM();
 		        em.getTransaction().begin();
 		        CriteriaBuilder cb = em.getCriteriaBuilder();
 		        CriteriaQuery<Part> cq = cb.createQuery(Part.class);
@@ -88,7 +86,7 @@ public class PartDAO implements IDAO<Part> {
 		
 		public List<Part> getAllGuay() {
 			List<Part> partes = new ArrayList<Part>();
-			EntityManager em = createEM();
+			EntityManager em = PersistenceUnit.getEM();
 			em.getTransaction().begin();
 			TypedQuery<Part> q = em.createNamedQuery("getAll", Part.class);
 			partes = q.getResultList();
@@ -99,7 +97,7 @@ public class PartDAO implements IDAO<Part> {
 		@Override
 		public Part getById(Long id) {
 			  Part result= null;
-		        EntityManager em=createEM();
+			  EntityManager em = PersistenceUnit.getEM();
 		        em.getTransaction().begin();
 		        result=em.find(Part.class, id);
 		        em.getTransaction().commit();

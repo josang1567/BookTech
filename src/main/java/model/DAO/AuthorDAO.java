@@ -1,17 +1,11 @@
 package model.DAO;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -20,23 +14,22 @@ import javax.persistence.criteria.Root;
 import util.PersistenceUnit;
 import model.Author;
 import model.Book;
-import model.Part;
 import model.interfaces.IDAO;
 
 public class AuthorDAO implements IDAO<Author> {
-	public static EntityManager createEM() {
-		EntityManagerFactory emf = PersistenceUnit.getInstance();
-		return emf.createEntityManager();
-	}
-
-	public static EntityTransaction beginSession() {
-		EntityManager em = createEM();
-		return em.getTransaction();
-	}
+//	public static EntityManager createEM() {
+//		EntityManagerFactory emf = PersistenceUnit.getInstance();
+//		return emf.createEntityManager();
+//	}
+//
+//	public static EntityTransaction beginSession() {
+//		EntityManager em = createEM();
+//		return em.getTransaction();
+//	}
 
 	@Override
 	public void save(Author a) {
-		EntityManager em = createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		em.persist(a);
 		em.getTransaction().commit();
@@ -45,7 +38,7 @@ public class AuthorDAO implements IDAO<Author> {
 
 	@Override
 	public void delete(Author a) {
-		EntityManager em = createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		em.remove(a);
 		em.getTransaction().commit();
@@ -54,7 +47,7 @@ public class AuthorDAO implements IDAO<Author> {
 	@Override
 	public Author getById(Long id) {
 		Author result = null;
-		EntityManager em = createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		result = em.find(Author.class, id);
 		em.getTransaction().commit();
@@ -66,7 +59,7 @@ public class AuthorDAO implements IDAO<Author> {
 	public Set<Author> getByName(String name) {
 		Set<Author> autores = new HashSet<Author>();
 		List<Author> lista= new ArrayList<Author>();
-		EntityManager em = createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		TypedQuery<Author> q = em.createNamedQuery("findAuthorbyName", Author.class);
 		q.setParameter("name", name);
@@ -78,7 +71,7 @@ public class AuthorDAO implements IDAO<Author> {
 
 	public Author getByNamePassword(String name, String password) {
 		Author autor = new Author();
-		EntityManager em = createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		TypedQuery<Author> q = em.createNamedQuery("findUserPassword", Author.class);
 		q.setParameter("name", name);
@@ -92,7 +85,7 @@ public class AuthorDAO implements IDAO<Author> {
 	@Override
 	public Set<Author> getAll() {
 		Set<Author> autores = new HashSet<Author>();
-		EntityManager em = createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Author> cq = cb.createQuery(Author.class);
@@ -103,7 +96,7 @@ public class AuthorDAO implements IDAO<Author> {
 	}
 
 	public static void addLibro(Author a, Book l) {
-		EntityManager em = createEM();
+		EntityManager em = PersistenceUnit.getEM();
 		em.getTransaction().begin();
 		Author ax = em.merge(a);
 		l.setAuthor(ax);
