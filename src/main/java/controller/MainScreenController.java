@@ -14,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import model.Annotation;
 import model.Book;
 import model.Chapter;
@@ -45,7 +44,7 @@ public class MainScreenController implements Initializable {
 	private TextArea ta_content;
 
 	@FXML
-	private TextField print_notes;
+	private TextArea print_notes;
 
 	@FXML
 	private ComboBox<Part> cb_part;
@@ -78,20 +77,21 @@ public class MainScreenController implements Initializable {
 		this.cb_chapter.setItems(this.chapterList);
 		this.cb_notes.setItems(annotationList);
 		this.cb_removeNote.setItems(annotationList);
-		partList.addAll(new PartDAO().getByBook(dummy));						//USAR USUARIO LOGUEADO
-		this.annotationList.addAll(new AnnotationDAO().getByBook(dummy));	//USAR USUARIO LOGUEADO
+		partList.addAll(new PartDAO().getByBook(dummy));						//USAR LIBRO LOGUEADO
+		this.annotationList.addAll(new AnnotationDAO().getByBook(dummy));	//USAR LIBRO LOGUEADO
 	}
 
 	@FXML
 	public void partSelection() {
-		
 		if (this.cb_part.getSelectionModel().getSelectedItem() != null) {
-			if(this.cb_chapter.getSelectionModel().getSelectedItem()!=null) {
-				this.chapterList.clear();
+			if (this.cb_chapter.getSelectionModel().getSelectedItem() != null) {
 				this.print_notes.clear();
 				this.annotationList.clear();
-				this.annotationList.addAll(new AnnotationDAO().getByBook(dummy));	//USAR USUARIO LOGUEADO
+				this.ta_content.clear();
+				this.ta_content.setDisable(true);
+				this.annotationList.addAll(new AnnotationDAO().getByBook(dummy)); // USAR LIBRO LOGUEADO
 			}
+			this.chapterList.clear();
 			this.chapterList.addAll(new ChapterDAO().getByPart(this.cb_part.getSelectionModel().getSelectedItem()));
 			this.cb_chapter.setDisable(false);
 		} else {
@@ -103,6 +103,8 @@ public class MainScreenController implements Initializable {
 		if(this.cb_chapter.getSelectionModel().getSelectedItem() != null) {
 			this.annotationList.clear();
 			this.print_notes.clear();
+			this.ta_content.setText(this.cb_chapter.getSelectionModel().getSelectedItem().getDescription());
+			this.ta_content.setDisable(false);
 			this.annotationList.addAll(new AnnotationDAO().getByChapter(this.cb_chapter.getSelectionModel().getSelectedItem()));
 		}
 	}
@@ -124,7 +126,25 @@ public class MainScreenController implements Initializable {
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.OK) {
 				new AnnotationDAO().delete(this.cb_removeNote.getSelectionModel().getSelectedItem());
+				if(this.cb_notes.getSelectionModel().getSelectedItem() == this.cb_removeNote.getSelectionModel().getSelectedItem()) {
+					this.cb_notes.getSelectionModel().clearSelection();
+					this.print_notes.clear();
+				}
+				this.annotationList.remove(this.cb_removeNote.getSelectionModel().getSelectedItem());
+				this.cb_removeNote.getSelectionModel().clearSelection();
 			}
+		}
+	}
+	
+	@FXML
+	public void saveChapter() {
+		if(this.cb_chapter.getSelectionModel().getSelectedItem() != null) {
+			this.cb_chapter.getSelectionModel().getSelectedItem().setDescription(ta_content.getText());
+			new ChapterDAO().save(this.cb_chapter.getSelectionModel().getSelectedItem());
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Chapter saved");
+			alert.setHeaderText("The chapter has been saved");
+			alert.showAndWait();
 		}
 	}
 	
